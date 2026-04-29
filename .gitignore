@@ -1,0 +1,6 @@
+.env
+*.db
+config.json
+SWU key.txt
+__pycache__/
+*.pyc

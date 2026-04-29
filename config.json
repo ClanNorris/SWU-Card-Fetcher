@@ -1,0 +1,12 @@
+{
+    "cooldown_seconds": 0,
+    "delete_after_pick": true,
+    "max_results": 10,
+    "list_expire_seconds": 15,
+    "channel_mode": "whitelist",
+    "allowed_channels": [
+        1498706321220964493,
+        1445649820655292550
+    ],
+    "delete_inline_trigger": false
+}
