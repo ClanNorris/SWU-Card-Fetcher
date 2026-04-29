@@ -13,7 +13,7 @@ from rapidfuzz import process as fuzz_process
 load_dotenv()
 
 # ====================== DATABASE ======================
-DB_PATH = "bot.db"
+DB_PATH = os.environ.get("DB_PATH", "bot.db")
 
 DEFAULT_CONFIG = {
     "cooldown_seconds": 0,

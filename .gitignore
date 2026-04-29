@@ -1,6 +1,6 @@
 .env
-*.db
-config.json
 SWU key.txt
+bot.db
+config.json
 __pycache__/
 *.pyc
