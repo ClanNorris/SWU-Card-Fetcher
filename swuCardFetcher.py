@@ -307,11 +307,11 @@ def search_card(query: str):
     try:
         card_name, set_code = parse_query(query)
         if set_code:
-            q = f"name:{card_name} set:{set_code}"
+            q = f'{card_name} set:{set_code}'
         else:
             matched = fuzzy_match_name(card_name)
             base_name = matched.split(' - ', 1)[0].strip()
-            q = f"name:{base_name}"
+            q = base_name
         resp = requests.get("https://api.swu-db.com/cards/search", params={"q": q, "limit": 15}, timeout=10)
         if resp.status_code != 200:
             print(f"⚠️ API returned {resp.status_code} for query: {q}")
