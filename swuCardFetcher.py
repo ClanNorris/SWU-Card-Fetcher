@@ -294,10 +294,8 @@ def check_api_rate_limit(guild_id: int, user_id: int, cfg: dict) -> bool:
 
 
 def is_channel_allowed(channel_id: int, cfg: dict) -> bool:
-    allowed = cfg.get('allowed_channels', [])
-    if not allowed:
-        return True
     mode = cfg.get('channel_mode', 'whitelist')
+    allowed = cfg.get('allowed_channels', [])
     if mode == 'whitelist':
         return channel_id in allowed
     return channel_id not in allowed
