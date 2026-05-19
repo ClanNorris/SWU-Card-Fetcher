@@ -66,7 +66,7 @@ user_cooldowns = {}
 api_call_times = {}
 card_name_cache = []
 
-KNOWN_SET_CODES = ("sor", "shd", "twi", "jtl", "lof", "ibh", "sec", "law")
+KNOWN_SET_CODES = ("sor", "shd", "twi", "jtl", "lof", "ibh", "sec", "law", "ash")
 
 # ====================== ON READY ======================
 @bot.event
@@ -227,6 +227,53 @@ async def swuhelp_command(interaction: discord.Interaction):
                           f"Cooldown: **{cfg.get('cooldown_seconds', 0)}**s\n"
                           f"List Expire: **{cfg.get('list_expire_seconds', 15)}**s", inline=False)
     await interaction.response.send_message(embed=embed)
+
+
+# ====================== BOTINFO ======================
+class BotInfoView(discord.ui.View):
+    def __init__(self):
+        super().__init__()
+        self.add_item(discord.ui.Button(
+            label="Add to your server",
+            url="https://discord.com/oauth2/authorize?client_id=1426062447734820926&permissions=76864&integration_type=0&scope=bot+applications.commands",
+            style=discord.ButtonStyle.link
+        ))
+
+
+@tree.command(name="botinfo", description="Show bot usage info and invite link")
+async def botinfo_command(interaction: discord.Interaction):
+    embed = discord.Embed(
+        title="SWU Card Fetcher",
+        description="Supports inline syntax, fuzzy search, set-specific filtering.",
+        color=0xFFD700
+    )
+    embed.add_field(
+        name="Inline Lookup",
+        value="Type `[[Card Name]]` anywhere in chat.\nExample: `[[Darth Vader]]` or `[[Han Solo]]`",
+        inline=False
+    )
+    embed.add_field(
+        name="Slash Command",
+        value="`/swucard <name>`",
+        inline=True
+    )
+    embed.add_field(
+        name="Fuzzy Search",
+        value="`[[dath vader]]` → Darth Vader\n`[[han sollo]]` → Han Solo",
+        inline=True
+    )
+    embed.add_field(
+        name="Set-Specific Search",
+        value="`[[Han Solo:SOR]]` or `[[Han Solo SOR]]` — either format works.\nSupported codes: `SOR` `SHD` `TWI` `JTL` `LOF` `IBH` `SEC` `LAW` `ASH`",
+        inline=False
+    )
+    embed.add_field(
+        name="Multi-Result Selection",
+        value="The bot posts a numbered list. React with the emoji or reply with the number to pick your card.",
+        inline=False
+    )
+    embed.set_footer(text="GitHub: https://github.com/ClanNorris/SWU-Card-Fetcher")
+    await interaction.response.send_message(embed=embed, view=BotInfoView())
 
 
 # ====================== CORE FUNCTIONS ======================
