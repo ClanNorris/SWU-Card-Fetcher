@@ -71,7 +71,6 @@ card_name_cache = []
 KNOWN_SET_CODES = ("sor", "shd", "twi", "jtl", "lof", "ibh", "sec", "law", "ash")
 
 STATUSES = [
-    (discord.ActivityType.watching, "for [[card]]"),
     (discord.ActivityType.watching, "Searching the galaxy for..."),
     (discord.ActivityType.playing,  "Meditating..."),
     (discord.ActivityType.playing,  "Searching my feelings..."),
@@ -79,9 +78,15 @@ STATUSES = [
     (discord.ActivityType.watching, "Giving in to the card side"),
 ]
 
+def pick_status():
+    if card_name_cache and random.random() < 0.5:
+        card_name = random.choice(card_name_cache)
+        return (discord.ActivityType.watching, f"Wanted: Warm or Cold - [[{card_name}]]")
+    return random.choice(STATUSES)
+
 @tasks.loop(minutes=15)
 async def rotate_status():
-    activity_type, name = random.choice(STATUSES)
+    activity_type, name = pick_status()
     await bot.change_presence(activity=discord.Activity(type=activity_type, name=name))
 
 # ====================== ON READY ======================
@@ -92,7 +97,7 @@ async def on_ready():
     print(f'✅ Bot is online as {bot.user}')
     await refresh_card_cache()
     print(f"✅ Bot ready | {len(card_name_cache)} card names cached | DB: {DB_PATH}")
-    activity_type, name = random.choice(STATUSES)
+    activity_type, name = pick_status()
     await bot.change_presence(activity=discord.Activity(type=activity_type, name=name))
     rotate_status.start()
 
