@@ -9,6 +9,7 @@ import aiosqlite
 from datetime import datetime, timedelta
 from discord import app_commands
 from discord.ext import tasks
+from typing import Union
 from dotenv import load_dotenv
 from rapidfuzz import process as fuzz_process
 
@@ -162,7 +163,7 @@ async def swuexpire_command(interaction: discord.Interaction, seconds: int):
 
 @tree.command(name="swuaddchannel", description="Add a channel to the allowed channels list")
 @app_commands.describe(channel="Channel to add")
-async def swuaddchannel_command(interaction: discord.Interaction, channel: discord.TextChannel):
+async def swuaddchannel_command(interaction: discord.Interaction, channel: Union[discord.TextChannel, discord.ForumChannel]):
     if not interaction.user.guild_permissions.administrator:
         await interaction.response.send_message("❌ Admins only.", ephemeral=True)
         return
@@ -179,7 +180,7 @@ async def swuaddchannel_command(interaction: discord.Interaction, channel: disco
 
 @tree.command(name="swuremovechannel", description="Remove a channel from the allowed channels list")
 @app_commands.describe(channel="Channel to remove")
-async def swuremovechannel_command(interaction: discord.Interaction, channel: discord.TextChannel):
+async def swuremovechannel_command(interaction: discord.Interaction, channel: Union[discord.TextChannel, discord.ForumChannel]):
     if not interaction.user.guild_permissions.administrator:
         await interaction.response.send_message("❌ Admins only.", ephemeral=True)
         return
