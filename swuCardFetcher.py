@@ -254,6 +254,13 @@ async def swuhelp_command(interaction: discord.Interaction):
     await interaction.response.send_message(embed=embed)
 
 
+# ====================== PING ======================
+@tree.command(name="ping", description="Check the bot's websocket latency")
+async def ping_command(interaction: discord.Interaction):
+    latency_ms = round(bot.latency * 1000)
+    await interaction.response.send_message(f"Pong! 🏓 {latency_ms}ms")
+
+
 # ====================== BOTINFO ======================
 class BotInfoView(discord.ui.View):
     def __init__(self):
