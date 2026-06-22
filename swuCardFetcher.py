@@ -251,6 +251,9 @@ async def swuhelp_command(interaction: discord.Interaction):
                     value=f"Max Results: **{cfg.get('max_results', 10)}**\n"
                           f"Cooldown: **{cfg.get('cooldown_seconds', 0)}**s\n"
                           f"List Expire: **{cfg.get('list_expire_seconds', 15)}**s", inline=False)
+    embed.add_field(name="Privacy Policy",
+                    value="🔒 https://github.com/ClanNorris/SWU-Card-Fetcher/blob/main/PRIVACY.md",
+                    inline=False)
     await interaction.response.send_message(embed=embed)
 
 
